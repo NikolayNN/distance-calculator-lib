@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>by.nhorushko.distancecalculator</groupId>
+  <artifactId>distance-calculator-lib</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20200826142620</lastUpdated>
+  </versioning>
+</metadata>
