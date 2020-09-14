@@ -12,5 +12,5 @@ public interface DistanceCalculator {
     /**
      * @return meters
      */
-    double calculateDistanceBetween(LatLngAlt a, LatLngAlt b);
+    double calculateDistance(LatLngAlt a, LatLngAlt b);
 }

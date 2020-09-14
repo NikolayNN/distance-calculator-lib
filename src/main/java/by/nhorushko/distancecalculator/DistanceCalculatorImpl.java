@@ -19,7 +19,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
         }
         double result = 0;
         for (int i = 1; i < coordinates.size(); i++) {
-            result += calculateDistanceBetween(coordinates.get(i - 1), coordinates.get(i));
+            result += calculateDistance(coordinates.get(i - 1), coordinates.get(i));
         }
         return result;
     }
@@ -34,7 +34,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      *
      * @return Distance in Meters
      */
-    public double calculateDistanceBetween(LatLngAlt pointA, LatLngAlt pointB) {
+    public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB) {
         if ((pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
                 (pointB.getLatitude() == 0 && pointB.getLongitude() == 0)) {
             return 0;
