@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>by.nhorushko.distancecalculator</groupId>
+    <groupId>by.nhorushko</groupId>
     <artifactId>distance-calculator-lib</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -24,6 +24,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.2.8.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -39,15 +44,6 @@
                     <source>11</source>
                     <target>11</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-                <version>3.8.1</version>
             </plugin>
 
             <plugin>

@@ -1,16 +1,19 @@
-package by.horushko.distancecalculator;
+package by.nhorushko.distancecalculator;
+
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.lang.Math.PI;
 
+@Service
 public class DistanceCalculatorImpl implements DistanceCalculator {
 
     public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371000;
 
     //https://code.i-harness.com/ru/q/6d18
     //https://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi
-    public double calculateDistance(List<LatLngAlt> coordinates) {
+    public double calculateDistance(List<? extends LatLngAlt> coordinates) {
         if (coordinates == null || coordinates.size() < 2) {
             return 0;
         }

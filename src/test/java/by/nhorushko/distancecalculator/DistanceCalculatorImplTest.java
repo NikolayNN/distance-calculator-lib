@@ -1,4 +1,4 @@
-package by.horushko.distancecalculator;
+package by.nhorushko.distancecalculator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class DistanceCalculatorImplTest {
     public void calculateDistance() {
 
         //given
-        final int expectedMileage = 79206;
+        final int expectedMileage = 79207;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
@@ -56,19 +56,19 @@ public class DistanceCalculatorImplTest {
     public void calculateDistance2() {
 
         //given
-        int expected = 366510;
+        int expected = 366512;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_366510_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
         //then
-        assertEquals(expected, actual, 0.5);
+        assertEquals(expected, actual, 1);
     }
 
     @Test
     public void calculateDistance3() {
 
         //given
-        double expected = 795523.9;
+        double expected = 795529.7;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_795523_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
@@ -80,7 +80,7 @@ public class DistanceCalculatorImplTest {
     public void calculateDistanceIfHasZerosCoordinates() {
 
         //given
-        int expected = 78772;
+        int expected = 78774;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE_ZEROS);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
@@ -97,8 +97,8 @@ public class DistanceCalculatorImplTest {
                     .map(coordinateString -> {
                         String[] latLngAltArray = coordinateString.split(";");
                         return new LatLngAltImpl(
-                                Double.parseDouble(latLngAltArray[0]),
-                                Double.parseDouble(latLngAltArray[1]),
+                                Float.parseFloat(latLngAltArray[0]),
+                                Float.parseFloat(latLngAltArray[1]),
                                 Integer.parseInt(latLngAltArray[2]));
                     })
                     .collect(Collectors.toList());
