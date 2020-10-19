@@ -35,8 +35,12 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * @return Distance in Meters
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB) {
-        if ((pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
+        if (!pointA.isValid() || !pointB.isValid() ||
+                (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
                 (pointB.getLatitude() == 0 && pointB.getLongitude() == 0)) {
+            return 0;
+        }
+        if (pointA.getSpeed() == 0 && pointB.getSpeed() == 0) {
             return 0;
         }
         double latDistance = degToRad(pointA.getLatitude() - pointB.getLatitude());

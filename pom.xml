@@ -6,7 +6,7 @@
 
     <groupId>by.nhorushko</groupId>
     <artifactId>distance-calculator-lib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
 
     <properties>
         <github.global.server>github</github.global.server>

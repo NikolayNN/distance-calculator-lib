@@ -88,6 +88,58 @@ public class DistanceCalculatorImplTest {
         assertEquals(expected, actual, 0.5);
     }
 
+    @Test
+    public void calculateDistance_ok() {
+        //given
+        List<LatLngAlt> coordinate = List.of(
+                new LatLngAltImpl(54.27379608154297f, 25.376237869262695f, 169, 0, true),
+                new LatLngAltImpl(54.27385711669922f, 25.37613296508789f, 167, 7, true),
+                new LatLngAltImpl(54.27388381958008f, 25.37611198425293f, 167, 0, true)
+        );
+        //when
+        double actual = distanceCalculator.calculateDistance(coordinate);
+        assertEquals(13.1, actual, 0.3);
+    }
+
+    @Test
+    public void calculateDistance_hasNotValid_ok() {
+        //given
+        List<LatLngAlt> coordinate = List.of(
+                new LatLngAltImpl(54.27379608154297f, 25.376237869262695f, 169, 0, false),
+                new LatLngAltImpl(54.27385711669922f, 25.37613296508789f, 167, 7, true),
+                new LatLngAltImpl(54.27388381958008f, 25.37611198425293f, 167, 0, true)
+        );
+        //when
+        double actual = distanceCalculator.calculateDistance(coordinate);
+        assertEquals(3.26, actual, 0.3);
+    }
+
+    @Test
+    public void calculateDistance_hasNotValid_shouldZero() {
+        //given
+        List<LatLngAlt> coordinate = List.of(
+                new LatLngAltImpl(54.27379608154297f, 25.376237869262695f, 169, 0, true),
+                new LatLngAltImpl(54.27385711669922f, 25.37613296508789f, 167, 7, false),
+                new LatLngAltImpl(54.27388381958008f, 25.37611198425293f, 167, 0, true)
+        );
+        //when
+        double actual = distanceCalculator.calculateDistance(coordinate);
+        assertEquals(0, actual, 0.3);
+    }
+
+    @Test
+    public void calculateDistance_hasNotValid2() {
+        //given
+        List<LatLngAlt> coordinate = List.of(
+                new LatLngAltImpl(54.27379608154297f, 25.376237869262695f, 169, 0, true),
+                new LatLngAltImpl(54.27385711669922f, 25.37613296508789f, 167, 7, true),
+                new LatLngAltImpl(54.27388381958008f, 25.37611198425293f, 167, 0, false)
+        );
+        //when
+        double actual = distanceCalculator.calculateDistance(coordinate);
+        assertEquals(9.82, actual, 0.3);
+    }
+
 
 
     private List<LatLngAlt> readCoordinatesFromFile(String fileName){
@@ -99,7 +151,8 @@ public class DistanceCalculatorImplTest {
                         return new LatLngAltImpl(
                                 Float.parseFloat(latLngAltArray[0]),
                                 Float.parseFloat(latLngAltArray[1]),
-                                Integer.parseInt(latLngAltArray[2]));
+                                Integer.parseInt(latLngAltArray[2]),
+                                25, true);
                     })
                     .collect(Collectors.toList());
         }catch (IOException e) {
