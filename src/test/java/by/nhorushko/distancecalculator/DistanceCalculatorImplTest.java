@@ -140,6 +140,13 @@ public class DistanceCalculatorImplTest {
         assertEquals(9.82, actual, 0.3);
     }
 
+    @Test
+    public void calculateDistance_distanceBetweenMessagesNotValid_shouldReturn0() {
+        //when
+        double actual = distanceCalculator.calculateDistance(new LatLngAltImpl(54.27379608154297f, 25.376237869262695f, 169, 0, true), new LatLngAltImpl(50.27379608154297f, 20.376237869262695f, 169, 0, true));
+        assertEquals(0, actual, 0.3);
+    }
+
 
 
     private List<LatLngAlt> readCoordinatesFromFile(String fileName){
