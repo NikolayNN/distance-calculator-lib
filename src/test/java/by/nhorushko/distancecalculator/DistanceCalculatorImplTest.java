@@ -147,6 +147,26 @@ public class DistanceCalculatorImplTest {
         assertEquals(0, actual, 0.3);
     }
 
+    @Test
+    public void calculateDistance_shouldReturnMileage() {
+        //when
+        double actual = distanceCalculator.calculateDistance(
+                new LatLngAltImpl(53.0F, 27.0F, 200, 0, true),
+                new LatLngAltImpl(53.1F, 27.1F, 200, 20, true)
+        );
+        assertEquals(12.973709649170702, actual, 0.00001);
+    }
+
+    @Test
+    public void calculateDistance_CoordinatesChangesButSpeedZero_shouldReturnZero() {
+        //when
+        double actual = distanceCalculator.calculateDistance(
+                new LatLngAltImpl(53.0F, 27.0F, 200, 0, true),
+                new LatLngAltImpl(53.1F, 27.1F, 200, 0, true)
+        );
+        assertEquals(0, actual, 0);
+    }
+
 
 
     private List<LatLngAlt> readCoordinatesFromFile(String fileName){
