@@ -44,48 +44,48 @@ public class DistanceCalculatorImplTest {
     public void calculateDistance() {
 
         //given
-        final int expectedMileage = 79207;
+        final double expectedMileage = 79.20731164889823;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
         //then
-        assertEquals(expectedMileage, actual, 0.5);
+        assertEquals(expectedMileage, actual, 0.00001);
     }
 
     @Test
     public void calculateDistance2() {
 
         //given
-        int expected = 366512;
+        double expected = 366.51252783401156;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_366510_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
         //then
-        assertEquals(expected, actual, 1);
+        assertEquals(expected, actual, 0.00001);
     }
 
     @Test
     public void calculateDistance3() {
 
         //given
-        double expected = 795529.7;
+        double expected = 795.529757461319;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_795523_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
         //then
-        assertEquals(expected, actual, 0.5);
+        assertEquals(expected, actual, 0.00001);
     }
 
     @Test
     public void calculateDistanceIfHasZerosCoordinates() {
 
         //given
-        int expected = 78774;
+        double expected = 78.77358322296419;
         List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE_ZEROS);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
         //then
-        assertEquals(expected, actual, 0.5);
+        assertEquals(expected, actual, 0.00001);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class DistanceCalculatorImplTest {
         );
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
-        assertEquals(13.1, actual, 0.3);
+        assertEquals(0.013087874445824278, actual, 0.00001);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class DistanceCalculatorImplTest {
         );
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
-        assertEquals(3.26, actual, 0.3);
+        assertEquals(0.003266803319942701, actual, 0.00001);
     }
 
     @Test
@@ -137,7 +137,7 @@ public class DistanceCalculatorImplTest {
         );
         //when
         double actual = distanceCalculator.calculateDistance(coordinate);
-        assertEquals(9.82, actual, 0.3);
+        assertEquals(0.009821071125881577, actual, 0.00001);
     }
 
     @Test

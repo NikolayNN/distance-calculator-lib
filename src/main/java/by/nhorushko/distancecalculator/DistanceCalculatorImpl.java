@@ -43,7 +43,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * el2 End altitude in meters
      * @param maxValidDistanceMeters max valid distance between points
      *
-     * @return Distance in Meters if calculated distance > {@param maxValidDistanceMeters} return 0
+     * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, double maxValidDistanceMeters) {
         if (!pointA.isValid() || !pointB.isValid() ||
@@ -65,7 +65,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
         double height = pointA.getAltitude() - pointB.getAltitude();
         distance = Math.sqrt(distance * distance + height * height);
 
-        return distance > maxValidDistanceMeters ? 0 : distance;
+        return distance > maxValidDistanceMeters ? 0 : distance/1000;
     }
 
     @Override
