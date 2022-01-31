@@ -1,5 +1,7 @@
 package by.nhorushko.distancecalculator;
 
+import java.util.Objects;
+
 public class DistanceCalculatorSettingsImpl implements DistanceCalculatorSettings {
 
     private final int minDetectionSpeed;
@@ -23,5 +25,26 @@ public class DistanceCalculatorSettingsImpl implements DistanceCalculatorSetting
 
     public static DistanceCalculatorSettings defaultValue() {
         return new DistanceCalculatorSettingsImpl(0, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DistanceCalculatorSettingsImpl that = (DistanceCalculatorSettingsImpl) o;
+        return minDetectionSpeed == that.minDetectionSpeed && maxMessageTimeout == that.maxMessageTimeout;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(minDetectionSpeed, maxMessageTimeout);
+    }
+
+    @Override
+    public String toString() {
+        return "DistanceCalculatorSettingsImpl{" +
+                "minDetectionSpeed=" + minDetectionSpeed +
+                ", maxMessageTimeout=" + maxMessageTimeout +
+                '}';
     }
 }
