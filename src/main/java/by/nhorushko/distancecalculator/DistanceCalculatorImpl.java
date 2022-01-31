@@ -35,10 +35,12 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
-        if (!pointA.isValid() || !pointB.isValid() ||
-                (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
-                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
-                (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout())
+        if (
+                !pointA.isValid() || !pointB.isValid() ||
+                        pointB.getDatetime().isBefore(pointA.getDatetime()) ||
+                        (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
+                        (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
+                        (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout())
 
         ) {
             return 0;
@@ -57,7 +59,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
         double height = pointA.getAltitude() - pointB.getAltitude();
         distance = Math.sqrt(distance * distance + height * height);
 
-        return distance > settings.getMaxMessageDistance() ? 0 : distance/1000D;
+        return distance > settings.getMaxMessageDistance() ? 0 : distance / 1000D;
     }
 
     private double degToRad(double deg) {

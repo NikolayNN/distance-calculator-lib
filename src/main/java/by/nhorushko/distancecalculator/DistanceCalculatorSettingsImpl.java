@@ -21,8 +21,6 @@ public class DistanceCalculatorSettingsImpl implements DistanceCalculatorSetting
         return maxMessageTimeout;
     }
 
-
-
     public static DistanceCalculatorSettings defaultValue() {
         return new DistanceCalculatorSettingsImpl(0, Integer.MAX_VALUE);
     }
