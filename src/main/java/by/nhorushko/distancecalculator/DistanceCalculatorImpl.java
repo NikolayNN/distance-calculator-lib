@@ -11,27 +11,17 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
 
     public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371000;
 
-    /**
-     * Если растояние между точками больше этой величины то расстояние принимается равным 0
-     */
-    public final static double DEFAULT_MAX_VALID_DISTANCE_BETWEEN_MESSAGES_METERS = 500 * 1000;
-
     //https://code.i-harness.com/ru/q/6d18
     //https://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi
-    public double calculateDistance(List<? extends LatLngAlt> coordinates, double maxValidDistanceMeters) {
+    public double calculateDistance(List<? extends LatLngAlt> coordinates, DistanceCalculatorSettings settings) {
         if (coordinates == null || coordinates.size() < 2) {
             return 0;
         }
         double result = 0;
         for (int i = 1; i < coordinates.size(); i++) {
-            result += calculateDistance(coordinates.get(i - 1), coordinates.get(i), maxValidDistanceMeters);
+            result += calculateDistance(coordinates.get(i - 1), coordinates.get(i), settings);
         }
         return result;
-    }
-
-    @Override
-    public double calculateDistance(List<? extends LatLngAlt> coordinates) {
-        return calculateDistance(coordinates, DEFAULT_MAX_VALID_DISTANCE_BETWEEN_MESSAGES_METERS);
     }
 
     /**
@@ -41,17 +31,19 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * <p>
      * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
      * el2 End altitude in meters
-     * @param maxValidDistanceMeters max valid distance between points
      *
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
-    public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, double maxValidDistanceMeters) {
+    public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
         if (!pointA.isValid() || !pointB.isValid() ||
                 (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
-                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0)) {
+                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
+                (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout())
+
+        ) {
             return 0;
         }
-        if (pointA.getSpeed() == 0 && pointB.getSpeed() == 0) {
+        if (pointA.getSpeed() <= settings.getMinDetectionSpeed() && pointB.getSpeed() <= settings.getMinDetectionSpeed()) {
             return 0;
         }
         double latDistance = degToRad(pointA.getLatitude() - pointB.getLatitude());
@@ -65,12 +57,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
         double height = pointA.getAltitude() - pointB.getAltitude();
         distance = Math.sqrt(distance * distance + height * height);
 
-        return distance > maxValidDistanceMeters ? 0 : distance/1000;
-    }
-
-    @Override
-    public double calculateDistance(LatLngAlt a, LatLngAlt b) {
-        return calculateDistance(a, b, DEFAULT_MAX_VALID_DISTANCE_BETWEEN_MESSAGES_METERS);
+        return distance > settings.getMaxMessageDistance() ? 0 : distance/1000D;
     }
 
     private double degToRad(double deg) {

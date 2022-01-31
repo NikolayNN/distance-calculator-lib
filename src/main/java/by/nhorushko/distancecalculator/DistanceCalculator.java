@@ -5,22 +5,12 @@ import java.util.List;
 public interface DistanceCalculator {
 
     /**
-     * @return meters
+     * @return kilometers
      */
-    double calculateDistance(List<? extends LatLngAlt> coordinates, double maxValidDistanceMeters);
+    double calculateDistance(List<? extends LatLngAlt> coordinates, DistanceCalculatorSettings settings);
 
     /**
-     * @return meters
+     * @return kilometers
      */
-    double calculateDistance(List<? extends LatLngAlt> coordinates);
-
-    /**
-     * @return meters
-     */
-    double calculateDistance(LatLngAlt a, LatLngAlt b, double maxValidDistanceMeters);
-
-    /**
-     * @return meters
-     */
-    double calculateDistance(LatLngAlt a, LatLngAlt b);
+    double calculateDistance(LatLngAlt a, LatLngAlt b, DistanceCalculatorSettings distanceCalculatorSettings);
 }
