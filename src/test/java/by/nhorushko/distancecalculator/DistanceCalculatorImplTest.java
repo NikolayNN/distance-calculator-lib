@@ -180,7 +180,7 @@ public class DistanceCalculatorImplTest {
         double actual = distanceCalculator.calculateDistance(
                 new LatLngAltImpl(Instant.ofEpochSecond(0), 53.0F, 27.0F, 200, 5, true),
                 new LatLngAltImpl(Instant.ofEpochSecond(10), 53.1F, 27.1F, 200, 5, true),
-                new DistanceCalculatorSettingsImpl(5, Integer.MAX_VALUE, 500_000)
+                new DistanceCalculatorSettingsImpl(5, Integer.MAX_VALUE)
         );
         assertEquals(0, actual, 0);
     }
@@ -191,7 +191,7 @@ public class DistanceCalculatorImplTest {
         double actual = distanceCalculator.calculateDistance(
                 new LatLngAltImpl(Instant.ofEpochSecond(0), 53.0F, 27.0F, 200, 6, true),
                 new LatLngAltImpl(Instant.ofEpochSecond(10), 53.1F, 27.1F, 200, 6, true),
-                new DistanceCalculatorSettingsImpl(5, Integer.MAX_VALUE, 500_000)
+                new DistanceCalculatorSettingsImpl(5, Integer.MAX_VALUE)
         );
         assertEquals(12.973709649170702, actual, 0.0000001);
     }
@@ -202,7 +202,7 @@ public class DistanceCalculatorImplTest {
         double actual = distanceCalculator.calculateDistance(
                 new LatLngAltImpl(Instant.ofEpochSecond(0), 53.0F, 27.0F, 200, 6, true),
                 new LatLngAltImpl(Instant.ofEpochSecond(300), 53.1F, 27.1F, 200, 6, true),
-                new DistanceCalculatorSettingsImpl(5,300, 500_000)
+                new DistanceCalculatorSettingsImpl(5,300)
         );
         assertEquals(12.973709649170702, actual, 0.0000001);
     }
@@ -213,7 +213,7 @@ public class DistanceCalculatorImplTest {
         double actual = distanceCalculator.calculateDistance(
                 new LatLngAltImpl(Instant.ofEpochSecond(0), 53.0F, 27.0F, 200, 6, true),
                 new LatLngAltImpl(Instant.ofEpochSecond(300), 53.1F, 27.1F, 200, 6, true),
-                new DistanceCalculatorSettingsImpl(5,299, 500_000)
+                new DistanceCalculatorSettingsImpl(5,299)
         );
         assertEquals(0, actual, 0.0000001);
     }

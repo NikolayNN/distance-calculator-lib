@@ -18,5 +18,7 @@ public interface DistanceCalculatorSettings {
      * Если растояние между точками больше этой величины то расстояние принимается равным 0
      * @return meters
      */
-    int getMaxMessageDistance();
+    default int getMaxMessageDistance(){
+        return 500_000;
+    }
 }
