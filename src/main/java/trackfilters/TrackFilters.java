@@ -1,0 +1,94 @@
+package trackfilters;
+
+import by.nhorushko.distancecalculator.LatLngAlt;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TrackFilters {
+
+//function to calculate distance from point to line, line is defined by two points
+    public float pointToLineDistance(LatLngAlt point,LatLngAlt linePoint1,LatLngAlt linePoint2){
+        float y2 = linePoint2.getLatitude();
+        float y1 = linePoint1.getLatitude();
+        float y0 = point.getLatitude();
+        float x2 = linePoint2.getLongitude();
+        float x1 = linePoint1.getLongitude();
+        float x0 = point.getLongitude();
+
+        double nominator = Math.abs((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1);
+        double denominator = Math.sqrt((y2 - y1)*(y2 - y1) + (x2 - x1)*(x2 - x1));
+        double distance = nominator / denominator;
+
+        return (float) distance;
+    }
+
+//Romer-Douglas-Peucker filtration function
+    public List<LatLngAlt> RDPFilter(List<LatLngAlt> inputList,float epsilon){
+
+    if (inputList.size() < 2){
+        return inputList;
+    }
+    List<Integer> stack = new ArrayList<>();
+    List<Boolean> keepPoint = new ArrayList<>();
+
+    stack.add(0,inputList.size() - 1);
+    stack.add(0,0);
+    for (int i=0; i < inputList.size(); i++){
+        keepPoint.add(true);
+    }
+
+        while(!stack.isEmpty())
+        {
+            Integer startIndex = stack.get(0);
+            Integer endIndex = stack.get(1);
+            stack.remove(0);
+            stack.remove(0);
+
+            float dMax = 0f;
+            Integer index = startIndex;
+            for(int i = startIndex + 1; i <= endIndex - 1; i++)
+            {
+                if(keepPoint.get(i))
+                {
+                    float d = pointToLineDistance(inputList.get(i), inputList.get(startIndex), inputList.get(endIndex));
+                    if(d > dMax)
+                    {
+                        index = i;
+                        dMax = d;
+                    }
+                }
+            }
+            if(dMax >= epsilon)
+            {
+                stack.add(0,index);
+                stack.add(0,startIndex);
+                stack.add(0,endIndex);
+                stack.add(0,index);
+            }
+            else
+            {
+                for(int j = startIndex + 1; j <= endIndex - 1; j++)
+                {
+                    keepPoint.set(j,false);
+                }
+            }
+//            System.out.println("dMax " + dMax);
+//            System.out.println("stack " + stack);
+        }
+
+//        System.out.println("keepPoint" + keepPoint);
+        List<LatLngAlt> resultList = new ArrayList<>();
+        for(int i = 0; i < inputList.size(); i++)
+        {
+            if(keepPoint.get(i))
+            {
+                resultList.add(inputList.get(i));
+            }
+        }
+        return resultList;
+    }
+
+
+
+}
