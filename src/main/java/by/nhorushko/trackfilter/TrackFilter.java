@@ -35,11 +35,11 @@ public class TrackFilter {
             stack.remove(0);
             stack.remove(0);
 
-            float dMax = 0f;
+            double dMax = 0f;
             Integer index = startIndex;
             for (int i = startIndex + 1; i <= endIndex - 1; i++) {
                 if (keepPoint.get(i)) {
-                    float d = pointToLineDistance(inputList.get(i), inputList.get(startIndex), inputList.get(endIndex));
+                    double d = pointToLineDistance(inputList.get(i), inputList.get(startIndex), inputList.get(endIndex));
                     if (d > dMax) {
                         index = i;
                         dMax = d;
@@ -74,18 +74,18 @@ public class TrackFilter {
      * @param linePoint2
      * @return
      */
-    private float pointToLineDistance(LatLngAlt point, LatLngAlt linePoint1, LatLngAlt linePoint2) {
-        float y1 = linePoint1.getLatitude();
-        float y2 = linePoint2.getLatitude();
-        float y0 = point.getLatitude();
-        float x1 = linePoint1.getLongitude();
-        float x2 = linePoint2.getLongitude();
-        float x0 = point.getLongitude();
+    private double pointToLineDistance(LatLngAlt point, LatLngAlt linePoint1, LatLngAlt linePoint2) {
+        double y1 = linePoint1.getLatitude();
+        double y2 = linePoint2.getLatitude();
+        double y0 = point.getLatitude();
+        double x1 = linePoint1.getLongitude();
+        double x2 = linePoint2.getLongitude();
+        double x0 = point.getLongitude();
 
         double nominator = Math.abs((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1);
         double denominator = Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
         double distance = nominator / denominator;
 
-        return (float) distance;
+        return distance;
     }
 }
