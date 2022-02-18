@@ -2,7 +2,6 @@ package by.nhorushko.trackfilters;
 
 import by.nhorushko.distancecalculator.LatLngAlt;
 import by.nhorushko.distancecalculator.LatLngAltImpl;
-import by.nhorushko.trackfilters.TrackFilters;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TrackFiltersClassTest {
+public class TrackFiltersTest {
     private TrackFilters trackFilters;
 
     @Before
