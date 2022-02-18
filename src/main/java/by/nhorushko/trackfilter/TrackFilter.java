@@ -16,7 +16,7 @@ public class TrackFilter {
      * @param epsilon
      * @return
      */
-    public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, float epsilon) {
+    public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, double epsilon) {
 
         if (inputList.size() < 2) {
             return inputList;

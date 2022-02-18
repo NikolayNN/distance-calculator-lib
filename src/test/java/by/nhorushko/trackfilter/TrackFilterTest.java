@@ -25,7 +25,7 @@ public class TrackFilterTest {
                 latLngAlt(500, 53.919789F, 27.566195F)
         );
 
-        List<? extends LatLngAlt> actual = trackFilter.filter(given, 0.0001f);
+        List<? extends LatLngAlt> actual = trackFilter.filter(given, 0.0001);
 
         List<? extends LatLngAlt> expected = List.of(given.get(0), given.get(5));
         assertEquals(expected, actual);
