@@ -1,4 +1,4 @@
-package by.nhorushko.trackfilters;
+package by.nhorushko.trackfilter;
 
 import by.nhorushko.distancecalculator.LatLngAlt;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TrackFilters {
+public class TrackFilter {
 
     /**
      * Romer-Douglas-Peucker filtration function
@@ -16,7 +16,7 @@ public class TrackFilters {
      * @param epsilon
      * @return
      */
-    public List<? extends LatLngAlt> RDPFilter(List<? extends LatLngAlt> inputList, float epsilon) {
+    public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, float epsilon) {
 
         if (inputList.size() < 2) {
             return inputList;

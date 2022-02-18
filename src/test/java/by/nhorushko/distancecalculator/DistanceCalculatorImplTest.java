@@ -1,5 +1,6 @@
 package by.nhorushko.distancecalculator;
 
+import by.nhorushko.util.MessageFileReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +47,7 @@ public class DistanceCalculatorImplTest {
 
         //given
         final double expectedMileage = 79.20731164889823;
-        List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE);
+        List<LatLngAlt> coordinate = MessageFileReader.read(TRACK_79206_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate, DistanceCalculatorSettingsImpl.defaultValue());
         //then
@@ -58,7 +59,7 @@ public class DistanceCalculatorImplTest {
 
         //given
         double expected = 366.51252783401156;
-        List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_366510_FILE);
+        List<LatLngAlt> coordinate = MessageFileReader.read(TRACK_366510_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate, DistanceCalculatorSettingsImpl.defaultValue());
         //then
@@ -70,7 +71,7 @@ public class DistanceCalculatorImplTest {
 
         //given
         double expected = 795.529757461319;
-        List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_795523_FILE);
+        List<LatLngAlt> coordinate = MessageFileReader.read(TRACK_795523_FILE);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate, DistanceCalculatorSettingsImpl.defaultValue());
         //then
@@ -82,7 +83,7 @@ public class DistanceCalculatorImplTest {
 
         //given
         double expected = 78.77358322296419;
-        List<LatLngAlt> coordinate = readCoordinatesFromFile(TRACK_79206_FILE_ZEROS);
+        List<LatLngAlt> coordinate = MessageFileReader.read(TRACK_79206_FILE_ZEROS);
         //when
         double actual = distanceCalculator.calculateDistance(coordinate, DistanceCalculatorSettingsImpl.defaultValue());
         //then
@@ -216,26 +217,5 @@ public class DistanceCalculatorImplTest {
                 new DistanceCalculatorSettingsImpl(5,299)
         );
         assertEquals(0, actual, 0.0000001);
-    }
-
-
-    private List<LatLngAlt> readCoordinatesFromFile(String fileName) {
-        List<LatLngAlt> coordinate = new ArrayList<>();
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            coordinate = stream
-                    .map(coordinateString -> {
-                        String[] latLngAltArray = coordinateString.split(";");
-                        return new LatLngAltImpl(
-                                Instant.ofEpochSecond(System.currentTimeMillis()/1000),
-                                Float.parseFloat(latLngAltArray[0]),
-                                Float.parseFloat(latLngAltArray[1]),
-                                Integer.parseInt(latLngAltArray[2]),
-                                25, true);
-                    })
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return coordinate;
     }
 }
