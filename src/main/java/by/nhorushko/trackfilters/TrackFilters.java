@@ -1,4 +1,4 @@
-package trackfilters;
+package by.nhorushko.trackfilters;
 
 import by.nhorushko.distancecalculator.LatLngAlt;
 import org.springframework.stereotype.Service;
