@@ -13,7 +13,7 @@ public class TrackFilter {
      * Romer-Douglas-Peucker filtration function
      *
      * @param inputList
-     * @param epsilon
+     * @param epsilon 0.0001 - 0.0002 tested optimal values
      * @return
      */
     public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, double epsilon) {
