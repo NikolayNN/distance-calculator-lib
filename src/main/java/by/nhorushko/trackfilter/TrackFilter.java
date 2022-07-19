@@ -18,7 +18,7 @@ public class TrackFilter {
      */
     public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, float epsilon) {
 
-        if (inputList.size() < 2) {
+        if (inputList.size() <= 2) {
             return inputList;
         }
         List<Integer> stack = new ArrayList<>();
