@@ -116,6 +116,20 @@ public class DistanceCalculatorImplTest {
         assertEquals(0.003266803319942701, actual, 0.00001);
     }
 
+
+    @Test
+    public void calculateDistance_validButHasZeroCoordinates_shouldReturnZero() {
+        //given
+        List<LatLngAlt> coordinate = List.of(
+                new LatLngAltImpl(Instant.ofEpochSecond(0), 54.27379608154297f, 25.376237869262695f, 169, 0, true),
+                new LatLngAltImpl(Instant.ofEpochSecond(10), 0, 0, 167, 7, true),
+                new LatLngAltImpl(Instant.ofEpochSecond(20), 54.27388381958008f, 25.37611198425293f, 167, 0, true)
+        );
+        //when
+        double actual = distanceCalculator.calculateDistance(coordinate, DistanceCalculatorSettingsImpl.defaultValue());
+        assertEquals(0, actual, 0.00001);
+    }
+
     @Test
     public void calculateDistance_hasNotValid_shouldZero() {
         //given
