@@ -232,4 +232,15 @@ public class DistanceCalculatorImplTest {
         );
         assertEquals(0, actual, 0.0000001);
     }
+
+    @Test
+    public void calculateDistance_maxDistance_shouldReturnZero() {
+        //when
+        double actual = distanceCalculator.calculateDistance(
+                new LatLngAltImpl(Instant.ofEpochSecond(0), 53.0F, 27.0F, 200, 6, true),
+                new LatLngAltImpl(Instant.ofEpochSecond(300), 1F, 1F, 200, 6, true),
+                new DistanceCalculatorSettingsImpl(5,299)
+        );
+        assertEquals(0, actual, 0.0000001);
+    }
 }
