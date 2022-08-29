@@ -57,9 +57,17 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     private boolean isPointsNotValid(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
         return !pointA.isValid() || !pointB.isValid() ||
                 pointB.getDatetime().isBefore(pointA.getDatetime()) ||
-                (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
-                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
-                (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout());
+                isZeroCoordinates(pointA, pointB) ||
+                isTimeouted(pointA, pointB, settings);
+    }
+
+    private boolean isZeroCoordinates(LatLngAlt pointA, LatLngAlt pointB){
+        return (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
+                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0);
+    }
+
+    private boolean isTimeouted(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
+        return pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout();
     }
 
     private double degToRad(double deg) {
