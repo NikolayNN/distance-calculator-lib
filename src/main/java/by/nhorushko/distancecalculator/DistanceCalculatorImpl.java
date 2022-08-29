@@ -2,13 +2,20 @@ package by.nhorushko.distancecalculator;
 
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 import static java.lang.Math.PI;
 
 @Service
 public class DistanceCalculatorImpl implements DistanceCalculator {
 
+    public final static long FILE_CHECKSUM = calcCheckSum();
     public final static double AVERAGE_RADIUS_OF_EARTH_METERS = 6371000;
 
     public double calculateDistance(List<? extends LatLngAlt> coordinates, DistanceCalculatorSettings settings) {
@@ -85,5 +92,31 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
 
     private double degToRad(double deg) {
         return deg / 180.0 * PI;
+    }
+
+    private static byte[] getBytes() throws IOException {
+        String path = DistanceCalculatorImpl.class.getName().replace('.', '/');
+        String fileName = path + ".class";
+        URL url = DistanceCalculatorImpl.class.getClassLoader().getResource(fileName);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        try (InputStream stream = url.openConnection().getInputStream()) {
+            int datum = stream.read();
+            while (datum != -1) {
+                buffer.write(datum);
+                datum = stream.read();
+            }
+        }
+        return buffer.toByteArray();
+    }
+
+    private static long calcCheckSum() {
+        try {
+            byte bytes[] = getBytes();
+            Checksum checksum = new CRC32();
+            checksum.update(bytes, 0, bytes.length);
+            return checksum.getValue();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
