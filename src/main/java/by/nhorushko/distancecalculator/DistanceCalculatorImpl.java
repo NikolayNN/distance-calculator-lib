@@ -35,8 +35,9 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
         if (
                 isPointsNotValid(pointA, pointB)
-                || notHasDetectionSpeed(pointA, pointB, settings)
-                || isTimeouted(pointA, pointB, settings)
+                        || hasWrongOrder(pointA, pointB)
+                        || notHasDetectionSpeed(pointA, pointB, settings)
+                        || isTimeouted(pointA, pointB, settings)
         ) {
             return 0;
         }
@@ -59,9 +60,13 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     }
 
     private boolean isPointsNotValid(LatLngAlt pointA, LatLngAlt pointB) {
-        return !pointA.isValid() || !pointB.isValid() ||
-                pointB.getDatetime().isBefore(pointA.getDatetime()) ||
-                isZeroCoordinates(pointA, pointB);
+        return !pointA.isValid()
+                || !pointB.isValid()
+                || isZeroCoordinates(pointA, pointB);
+    }
+
+    private boolean hasWrongOrder(LatLngAlt pointA, LatLngAlt pointB) {
+        return pointB.getDatetime().isBefore(pointA.getDatetime());
     }
 
     private boolean isZeroCoordinates(LatLngAlt pointA, LatLngAlt pointB) {
