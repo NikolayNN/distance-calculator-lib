@@ -61,7 +61,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
                 isTimeouted(pointA, pointB, settings);
     }
 
-    private boolean isZeroCoordinates(LatLngAlt pointA, LatLngAlt pointB){
+    private boolean isZeroCoordinates(LatLngAlt pointA, LatLngAlt pointB) {
         return (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
                 (pointB.getLatitude() == 0 && pointB.getLongitude() == 0);
     }
