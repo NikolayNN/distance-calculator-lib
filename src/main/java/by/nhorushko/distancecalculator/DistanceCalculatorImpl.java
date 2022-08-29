@@ -27,8 +27,8 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * into account height difference. If you are not interested in height
      * difference pass 0.0. Uses Haversine method as its base.
      * <p>
-     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
-     * el2 End altitude in meters
+     * lat1, lon1 Start point lat2, lon2 End point alt1 Start altitude in meters
+     * alt2 End altitude in meters
      *
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
