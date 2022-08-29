@@ -9,10 +9,8 @@ import static java.lang.Math.PI;
 @Service
 public class DistanceCalculatorImpl implements DistanceCalculator {
 
-    public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371000;
+    public final static double AVERAGE_RADIUS_OF_EARTH_METERS = 6371000;
 
-    //https://code.i-harness.com/ru/q/6d18
-    //https://stackoverflow.com/questions/3694380/calculating-distance-between-two-points-using-latitude-longitude-what-am-i-doi
     public double calculateDistance(List<? extends LatLngAlt> coordinates, DistanceCalculatorSettings settings) {
         if (coordinates == null || coordinates.size() < 2) {
             return 0;
@@ -55,7 +53,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
                 + Math.cos(Math.toRadians(pointA.getLatitude())) * Math.cos(Math.toRadians(pointB.getLatitude()))
                 * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = AVERAGE_RADIUS_OF_EARTH_KM * c;
+        double distance = AVERAGE_RADIUS_OF_EARTH_METERS * c;
         double height = pointA.getAltitude() - pointB.getAltitude();
         distance = Math.sqrt(distance * distance + height * height);
 
