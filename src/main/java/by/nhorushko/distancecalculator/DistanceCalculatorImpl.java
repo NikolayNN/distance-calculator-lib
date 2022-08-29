@@ -33,17 +33,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
-        if (
-                !pointA.isValid() || !pointB.isValid() ||
-                        pointB.getDatetime().isBefore(pointA.getDatetime()) ||
-                        (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
-                        (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
-                        (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout())
-
-        ) {
-            return 0;
-        }
-        if (pointA.getSpeed() <= settings.getMinDetectionSpeed() && pointB.getSpeed() <= settings.getMinDetectionSpeed()) {
+        if (isPointsNotValid(pointA, pointB, settings) || notHasDetectionSpeed(pointA, pointB, settings)) {
             return 0;
         }
         double latDistance = degToRad(pointA.getLatitude() - pointB.getLatitude());
@@ -58,6 +48,18 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
         distance = Math.sqrt(distance * distance + height * height);
 
         return distance > settings.getMaxMessageDistance() ? 0 : distance / 1000D;
+    }
+
+    private boolean notHasDetectionSpeed(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
+        return pointA.getSpeed() <= settings.getMinDetectionSpeed() && pointB.getSpeed() <= settings.getMinDetectionSpeed();
+    }
+
+    private boolean isPointsNotValid(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
+        return !pointA.isValid() || !pointB.isValid() ||
+                pointB.getDatetime().isBefore(pointA.getDatetime()) ||
+                (pointA.getLatitude() == 0 && pointA.getLongitude() == 0) ||
+                (pointB.getLatitude() == 0 && pointB.getLongitude() == 0) ||
+                (pointB.getDatetime().getEpochSecond() - pointA.getDatetime().getEpochSecond() > settings.getMaxMessageTimeout());
     }
 
     private double degToRad(double deg) {
