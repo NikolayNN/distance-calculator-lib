@@ -33,7 +33,10 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
-        if (isPointsNotValid(pointA, pointB, settings) || notHasDetectionSpeed(pointA, pointB, settings)) {
+        if (isPointsNotValid(pointA, pointB, settings)
+                || notHasDetectionSpeed(pointA, pointB, settings)
+                || isTimeouted(pointA, pointB, settings)
+        ) {
             return 0;
         }
         double latDistance = degToRad(pointA.getLatitude() - pointB.getLatitude());
@@ -57,8 +60,7 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     private boolean isPointsNotValid(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
         return !pointA.isValid() || !pointB.isValid() ||
                 pointB.getDatetime().isBefore(pointA.getDatetime()) ||
-                isZeroCoordinates(pointA, pointB) ||
-                isTimeouted(pointA, pointB, settings);
+                isZeroCoordinates(pointA, pointB);
     }
 
     private boolean isZeroCoordinates(LatLngAlt pointA, LatLngAlt pointB) {
