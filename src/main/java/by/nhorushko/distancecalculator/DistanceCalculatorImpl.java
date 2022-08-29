@@ -33,15 +33,16 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
      * @return Distance in Kilometers if calculated distance > {@param maxValidDistanceMeters} return 0
      */
     public double calculateDistance(LatLngAlt pointA, LatLngAlt pointB, DistanceCalculatorSettings settings) {
-        if (isPointsNotValid(pointA, pointB)
+        if (
+                isPointsNotValid(pointA, pointB)
                 || notHasDetectionSpeed(pointA, pointB, settings)
                 || isTimeouted(pointA, pointB, settings)
         ) {
             return 0;
         }
+
         double latDistance = degToRad(pointA.getLatitude() - pointB.getLatitude());
         double lngDistance = degToRad(pointA.getLongitude() - pointB.getLongitude());
-
         double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
                 + Math.cos(Math.toRadians(pointA.getLatitude())) * Math.cos(Math.toRadians(pointB.getLatitude()))
                 * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
