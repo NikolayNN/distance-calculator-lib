@@ -243,4 +243,9 @@ public class DistanceCalculatorImplTest {
         );
         assertEquals(0, actual, 0.0000001);
     }
+
+    @Test
+    public void fileCheckSum() {
+        assertEquals(3523603420L, DistanceCalculatorImpl.FILE_CHECKSUM);
+    }
 }
