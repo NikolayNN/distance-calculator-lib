@@ -3,7 +3,6 @@ package by.nhorushko.distancecalculator;
 import by.nhorushko.util.MessageFileReader;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
