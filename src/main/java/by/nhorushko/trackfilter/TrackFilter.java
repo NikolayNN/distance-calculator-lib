@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TrackFilter {
+public class TrackFilter implements TrackFilterI {
 
     /**
      * Romer-Douglas-Peucker filtration function
