@@ -1,13 +1,15 @@
 package by.nhorushko.trackfilter;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TrackFilterTest {
+
+class TrackFilterImprTest {
 
     private final TrackFilter trackFilter = new TrackFilter();
 
@@ -36,4 +38,5 @@ public class TrackFilterTest {
     private List<LatLng> latLng(LatLng... array) {
         return Arrays.asList(array);
     }
+
 }
