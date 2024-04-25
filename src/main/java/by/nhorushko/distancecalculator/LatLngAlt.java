@@ -1,14 +1,12 @@
 package by.nhorushko.distancecalculator;
 
+import by.nhorushko.trackfilter.LatLng;
+
 import java.time.Instant;
 
-public interface LatLngAlt {
+public interface LatLngAlt extends LatLng {
 
     Instant getDatetime();
-
-    float getLatitude();
-
-    float getLongitude();
 
     int getAltitude();
 

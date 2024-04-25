@@ -19,7 +19,7 @@ public class TrackFilterImpr implements TrackFilterI {
      * @param epsilon   Пороговое значение расстояния для определения значимости точек.
      * @return Отфильтрованный список точек, удовлетворяющих условиям алгоритма.
      */
-    public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, double epsilon) {
+    public List<? extends LatLng> filter(List<? extends LatLng> inputList, double epsilon) {
         if (inputList.size() <= 2) {
             return inputList;
         }
@@ -36,8 +36,8 @@ public class TrackFilterImpr implements TrackFilterI {
             int endIndex = indexStack.pop();
             int startIndex = indexStack.pop();
 
-            LatLngAlt startPoint = inputList.get(startIndex);
-            LatLngAlt endPoint = inputList.get(endIndex);
+            LatLng startPoint = inputList.get(startIndex);
+            LatLng endPoint = inputList.get(endIndex);
 
             // расчет общих значений для сегмента
             double dY = endPoint.getLatitude() - startPoint.getLatitude();
@@ -70,7 +70,7 @@ public class TrackFilterImpr implements TrackFilterI {
             }
         }
 
-        List<LatLngAlt> resultList = new ArrayList<>();
+        List<LatLng> resultList = new ArrayList<>();
         for (int i = 0; i < keepPoint.length; i++) {
             if (keepPoint[i]) {
                 resultList.add(inputList.get(i));
@@ -91,7 +91,7 @@ public class TrackFilterImpr implements TrackFilterI {
      * @param lineLength Длина линии.
      * @return Перпендикулярное расстояние от точки до линии.
      */
-    private double pointToLineDistance(LatLngAlt point, double dY, double dX, double cross, double lineLength) {
+    private double pointToLineDistance(LatLng point, double dY, double dX, double cross, double lineLength) {
         double y0 = point.getLatitude();
         double x0 = point.getLongitude();
         double nominator = Math.abs(dY * x0 - dX * y0 + cross);

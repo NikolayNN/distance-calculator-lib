@@ -5,5 +5,5 @@ import by.nhorushko.distancecalculator.LatLngAlt;
 import java.util.List;
 
 public interface TrackFilterI {
-    List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, double epsilon);
+    List<? extends LatLng> filter(List<? extends LatLng> inputList, double epsilon);
 }

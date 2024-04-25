@@ -15,8 +15,10 @@ public class TrackFilter implements TrackFilterI {
      * @param inputList
      * @param epsilon 0.0001 - 0.0002 tested optimal values
      * @return
+     * @deprecated {@link TrackFilterImpr}
      */
-    public List<? extends LatLngAlt> filter(List<? extends LatLngAlt> inputList, double epsilon) {
+    @Deprecated
+    public List<? extends LatLng> filter(List<? extends LatLng> inputList, double epsilon) {
 
         if (inputList.size() <= 2) {
             return inputList;
@@ -57,7 +59,7 @@ public class TrackFilter implements TrackFilterI {
                 }
             }
         }
-        List<LatLngAlt> resultList = new ArrayList<>();
+        List<LatLng> resultList = new ArrayList<>();
         for (int i = 0; i < inputList.size(); i++) {
             if (keepPoint.get(i)) {
                 resultList.add(inputList.get(i));
@@ -74,7 +76,7 @@ public class TrackFilter implements TrackFilterI {
      * @param linePoint2
      * @return
      */
-    private double pointToLineDistance(LatLngAlt point, LatLngAlt linePoint1, LatLngAlt linePoint2) {
+    private double pointToLineDistance(LatLng point, LatLng linePoint1, LatLng linePoint2) {
         double y1 = linePoint1.getLatitude();
         double y2 = linePoint2.getLatitude();
         double y0 = point.getLatitude();
