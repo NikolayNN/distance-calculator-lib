@@ -14,6 +14,9 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClassifiedDistanceStorage {
+
+    public static final ClassifiedDistanceStorage EMPTY = new ClassifiedDistanceStorage(ClassifiedDistance.EMPTY, ClassifiedDistance.EMPTY);
+
     /**
      * Classified distance based on GPS measurements.
      */

@@ -14,6 +14,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClassifiedDistance {
 
+    public static final ClassifiedDistance EMPTY = new ClassifiedDistance(0, 0);
+
     /**
      * The distance measured in urban areas, expressed in kilometers.
      */
