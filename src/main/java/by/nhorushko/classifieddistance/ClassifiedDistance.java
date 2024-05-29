@@ -1,5 +1,7 @@
 package by.nhorushko.classifieddistance;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +23,13 @@ public class ClassifiedDistance {
      * The distance measured in country areas, expressed in kilometers.
      */
     double country;
+
+    @JsonCreator
+    public ClassifiedDistance(@JsonProperty("urban") double urban,
+                              @JsonProperty("country") double country) {
+        this.urban = urban;
+        this.country = country;
+    }
 
     /**
      * Calculates the total distance covered by combining urban and country distances.

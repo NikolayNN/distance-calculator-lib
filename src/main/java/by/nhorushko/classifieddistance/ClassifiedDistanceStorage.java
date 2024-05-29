@@ -1,5 +1,7 @@
 package by.nhorushko.classifieddistance;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +23,13 @@ public class ClassifiedDistanceStorage {
      * Classified distance based on odometer readings.
      */
     ClassifiedDistance odoDistance;
+
+    @JsonCreator
+    public ClassifiedDistanceStorage(@JsonProperty("gpsDistance") ClassifiedDistance gpsDistance,
+                                     @JsonProperty("odoDistance") ClassifiedDistance odoDistance) {
+        this.gpsDistance = gpsDistance;
+        this.odoDistance = odoDistance;
+    }
 
     /**
      * Aggregates this classified distance storage with another instance, combining the respective GPS and odometer distances.
