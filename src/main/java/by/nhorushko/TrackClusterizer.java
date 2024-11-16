@@ -15,7 +15,7 @@ public class TrackClusterizer {
      * @param clusterRadius Максимальное расстояние (в метрах) между точками для создания кластера.
      * @return Список кластеризованных точек.
      */
-    public List<LatLng> clusterPoints(List<LatLng> inputList, double clusterRadius) {
+    public List<LatLng> clusterPoints(List<? extends LatLng> inputList, double clusterRadius) {
         List<LatLng> resultList = new ArrayList<>();
         List<LatLng> currentCluster = new ArrayList<>();
 
