@@ -4,8 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static by.nhorushko.classifieddistance.ClassifiedDistance.withUncategorizedUrban;
-
 /**
  * Service class for classifying distances based on speed thresholds.
  * This class categorizes distances as either urban or country based on whether the speed exceeds a specified threshold.
@@ -36,8 +34,8 @@ public class DistanceClassifierSpeedBased {
                 totalOdoUrban += current.getOdoDistance().getRelative();
             }
         }
-        ClassifiedDistance gpsDistanceInfo = withUncategorizedUrban(totalGpsUrban, totalGpsCountry);
-        ClassifiedDistance odoDistanceInfo = withUncategorizedUrban(totalOdoUrban, totalOdoCountry);
+        ClassifiedDistance gpsDistanceInfo = new ClassifiedDistance(totalGpsUrban, totalGpsCountry);
+        ClassifiedDistance odoDistanceInfo = new ClassifiedDistance(totalOdoUrban, totalOdoCountry);
         return new ClassifiedDistanceStorage(gpsDistanceInfo, odoDistanceInfo);
     }
 
