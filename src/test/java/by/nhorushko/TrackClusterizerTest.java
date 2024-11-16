@@ -22,7 +22,7 @@ class TrackClusterizerTest {
         List<LatLng> inputList = new ArrayList<>();
         double clusterRadius = 10.0; // Любое значение, так как список пустой
 
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
 
         assertTrue(result.isEmpty(), "Результат должен быть пустым для пустого входного списка.");
     }
@@ -36,7 +36,7 @@ class TrackClusterizerTest {
         inputList.add(new LatLngImpl(55.7558F, 37.6176F)); // Москва
         double clusterRadius = 10.0;
 
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
 
         assertEquals(1, result.size(), "Результат должен содержать одну точку.");
         assertEquals(inputList.get(0), result.get(0), "Точка в результате должна совпадать с входной точкой.");
@@ -53,7 +53,7 @@ class TrackClusterizerTest {
         inputList.add(new LatLngImpl(55.7560F, 37.6178F));
         double clusterRadius = 50.0; // 50 метров
 
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
 
         assertEquals(1, result.size(), "Все точки должны быть объединены в один кластер.");
         assertEquals(inputList.get(0), result.get(0), "Точка в результате должна быть первой входной точкой.");
@@ -73,7 +73,7 @@ class TrackClusterizerTest {
         inputList.add(new LatLngImpl(59.9344F, 30.3352F));
         double clusterRadius = 1000.0; // 1000 метров
 
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
 
         assertEquals(2, result.size(), "Должно быть два кластера.");
         assertEquals(inputList.get(0), result.get(0), "Первая точка результата должна быть первой точкой первого кластера.");
@@ -91,7 +91,7 @@ class TrackClusterizerTest {
         inputList.add(new LatLngImpl(40.7128F, -74.0060F)); // Нью-Йорк
         double clusterRadius = 500000.0; // 500 километров
 
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
 
         assertEquals(3, result.size(), "Все точки должны быть в отдельных кластерах.");
         assertEquals(inputList.get(0), result.get(0), "Первая точка результата должна быть Москва.");
@@ -123,7 +123,7 @@ class TrackClusterizerTest {
         double clusterRadius = 20.0;  // 20 метров
 
         long start = System.currentTimeMillis();
-        List<LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
+        List<? extends LatLng> result = clusterizer.clusterPoints(inputList, clusterRadius);
         System.out.println(System.currentTimeMillis() - start);
 
         assertEquals(1, result.size(), "Все точки должны быть объединены в один кластер.");
