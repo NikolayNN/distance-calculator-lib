@@ -1,4 +1,4 @@
-package by.nhorushko;
+package by.nhorushko.clusterizer;
 
 import by.nhorushko.trackfilter.LatLng;
 

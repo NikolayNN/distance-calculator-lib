@@ -1,5 +1,6 @@
 package by.nhorushko;
 
+import by.nhorushko.clusterizer.TrackClusterizer;
 import by.nhorushko.trackfilter.LatLng;
 import by.nhorushko.trackfilter.LatLngImpl;
 import org.junit.jupiter.api.Test;
