@@ -1,0 +1,5 @@
+# Инструменты проекта (mise): `mise install` ставит нужные версии,
+# `mise exec -- mvn ...` и ./mvnw работают с ними без ручной настройки JAVA_HOME.
+[tools]
+java = "temurin-25.0.4+7.0.LTS"
+maven = "3.9.16"

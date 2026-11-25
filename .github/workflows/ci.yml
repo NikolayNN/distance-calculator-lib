@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, master]
+  push:
+    branches: [develop, master]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - run: ./mvnw -B verify
+
+  publish:
+    needs: verify
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          server-id: github
+      - name: Read release version
+        run: |
+          version=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)
+          [[ "$version" =~ ^[0-9]+(\.[0-9]+)+$ ]]
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+      - name: Prepare snapshot
+        if: github.ref == 'refs/heads/develop'
+        run: ./mvnw -B versions:set -DnewVersion="${VERSION}-SNAPSHOT" -DgenerateBackupPoms=false
+      - name: Check release tag and package
+        if: github.ref == 'refs/heads/master'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          tags=$(git ls-remote --tags origin "refs/tags/v$VERSION")
+          if [[ -n "$tags" ]]; then
+            echo "::error::Tag v$VERSION already exists"
+            exit 1
+          fi
+          repo="https://maven.pkg.github.com/nikolaynn/distance-calculator-lib"
+          artifact=distance-calculator-lib
+          url="$repo/by/nhorushko/$artifact/$VERSION/$artifact-$VERSION.pom"
+          status=$(curl --silent --show-error --location --output /dev/null --write-out '%{http_code}' \
+            --user "$GITHUB_ACTOR:$GITHUB_TOKEN" "$url")
+          case "$status" in
+            404) ;;
+            200) echo "::error::Package $artifact:$VERSION already exists"; exit 1 ;;
+            *) echo "::error::Package lookup returned HTTP $status"; exit 1 ;;
+          esac
+      - name: Publish to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: ./mvnw -B deploy -DskipTests
+      - name: Tag published release
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git tag "v$VERSION" "$GITHUB_SHA"
+          git push origin "refs/tags/v$VERSION"
