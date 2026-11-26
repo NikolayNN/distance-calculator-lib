@@ -6,7 +6,7 @@
 
     <groupId>by.nhorushko</groupId>
     <artifactId>distance-calculator-lib</artifactId>
-    <version>7.9</version>
+    <version>7.10</version>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
